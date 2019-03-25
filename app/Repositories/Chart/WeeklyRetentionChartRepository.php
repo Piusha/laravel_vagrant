@@ -23,6 +23,11 @@ class WeeklyRetentionChartRepository implements ChartInterface
 
     }
 
+    public function getDataSet()
+    {
+        return $this->dataSet;
+    }
+
     public function getChartDataSet()
     {
 
@@ -41,46 +46,44 @@ class WeeklyRetentionChartRepository implements ChartInterface
         $this->chartDataSet ["xAxis"] = ["categories" => []];
         $this->chartDataSet ["tooltip"] =["valueSuffix" => "%"];
 
-         // $categoryArray = ['0', '20', '40', '50', '70', '90', '99', '100' ];
 
-
-
-        $this->chartDataSet ["yAxis"] = array (
-            "title" => array (
-                "text" => "Total Onboarded"
-            ),
-            'labels' => array(
+        $this->chartDataSet ["yAxis"] = [
+            "title" => [
+                "text" => "Total OnBoarded"
+            ],
+            'labels' => [
                 'format' => '{value}%'
-            ),
+            ],
             'min' => '0',
             'max' => '100'
-        );
+        ];
 
 
         $series = [];
        // $categoryArray = [];
-        foreach($this->dataSet as $data) {
+        foreach($this->dataSet->toArray() as $data) {
 
+            $week_start = $data['week_start'];
+            unset($data['week_start']);
+            unset($data['week_name']);
+            $total = $data['Total'];
+            unset($data['Total']);
 
-            if ( !isset($categoryArray[$data['step']])) {
+            $series[$week_start] = [
+                'name' => $week_start,
+                'data' =>[]
+            ];
+            foreach($data as $key => $value) {
 
-                $categoryArray[$data['step']] = $data['step'];
+                if ( !isset($categoryArray[$key])) {
+                    $categoryArray[$key] = $key;
+                }
+                $series[$week_start]['data'][] = round(($value / $total) * 100);
             }
 
-
-            if (!isset($series[$data['week_start']]) ) {
-
-                $series[$data['week_start']] = [
-                    'name' =>   $data['week_start'],
-                    'data' =>[]
-                ];
-            }
-
-            $series[$data['week_start']]['data'][] = $data['percentage'];
         }
         $this->chartDataSet ["xAxis"] = ["categories" => array_values($categoryArray)];
         $this->chartDataSet['series'] = array_values($series);
 
-       // dd($this->chartDataSet);
     }
 }

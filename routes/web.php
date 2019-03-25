@@ -13,4 +13,5 @@
 
 Route::get('/', function () {
     return view('onboarding.onboarding');
+    // return view('welcome');
 });

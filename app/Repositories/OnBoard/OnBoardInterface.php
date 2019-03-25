@@ -11,8 +11,7 @@ namespace App\Repository\OnBoard;
 interface OnBoardInterface
 {
 
-
-    /**
+     /**
      * <p>
      * List On boarding completion steps
      *</p>
@@ -20,18 +19,5 @@ interface OnBoardInterface
      */
     public function listCompletionSteps();
 
-
-    /**
-     * @param string $period
-     * @param array $onBoardings
-     * @return mixed
-     */
-    public function getRetention($onBoardings = [], $period = 'W' );
-
-    /**
-     * @param array $retention
-     * @return mixed
-     */
-    public function onBoardingFlowPercentage($retention = []);
 
 }

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Statistic;
 
+use App\Model\UserOnBoarding;
 use App\Repository\Chart\ChartInterface;
 use App\Repository\OnBoard\OnBoardInterface;
 use Illuminate\Http\Request;
@@ -25,21 +26,15 @@ class OnBoardingStepController extends Controller
     }
 
 
-
-
     public function getCompletionSteps(Request $request)
     {
 
         try {
 
+
             $onBoardings = $this->onBoarding->listCompletionSteps();
 
-            $retentions = $this->onBoarding->getRetention($onBoardings);
-
-            $retentionPercentage = $this->onBoarding->onBoardingFlowPercentage($retentions);
-
-
-            $this->chart->setDataSet($retentionPercentage);
+            $this->chart->setDataSet($onBoardings);
             $chartDataSet = $this->chart->getChartDataSet();
 
             return response()->json($chartDataSet,200);

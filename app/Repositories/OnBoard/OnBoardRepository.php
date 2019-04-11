@@ -28,9 +28,15 @@ class OnBoardRepository implements OnBoardInterface
     {
         try {
 
-            return UserOnBoarding::groupByWeek()
-                ->orderBy(DB::raw('YEAR(created_at)'),'ASC')
-                ->orderBy(DB::raw('WEEK(created_at)'),'ASC')
+            return UserOnBoarding::totalOnBoardings()
+                ->totalAccountCreation()
+                ->totalActivatedAccount()
+                ->totalProvideProfileInformation()
+                ->totalInterestedJob()
+                ->totalJobExperience()
+                ->totalFreelancer()
+                ->totalApproval()
+                ->groupByWeek()
                 ->get();
 
         } catch (Exception $ex) {

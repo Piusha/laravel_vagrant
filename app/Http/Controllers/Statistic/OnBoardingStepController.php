@@ -32,12 +32,12 @@ class OnBoardingStepController extends Controller
         try {
 
 
-            $onBoardings = $this->onBoarding->listCompletionSteps();
+//            $onBoardings = $this->onBoarding->listCompletionSteps();
+//
+//            $this->chart->setDataSet($onBoardings);
+//            $chartDataSet = $this->chart->getChartDataSet();
 
-            $this->chart->setDataSet($onBoardings);
-            $chartDataSet = $this->chart->getChartDataSet();
-
-            return response()->json($chartDataSet,200);
+            return response()->json(200);
 
         } catch (Exception $ex){
 
